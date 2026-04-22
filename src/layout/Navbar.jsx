@@ -1,36 +1,73 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { CiMenuFries } from "react-icons/ci";
+import { IoMdClose } from "react-icons/io";
 
+const NAVLINKS = [
+	{ name: "Home", path: "/" },
+	{ name: "Products", path: "/products" },
+	{ name: "About", path: "/about" },
+	{ name: "Contact", path: "/contact" },
+];
 const Navbar = () => {
-	const NAVLINKS = [
-		{ name: "Home", path: "/" },
-		{ name: "About", path: "/about" },
-		{ name: "Products", path: "/Product" },
-		{ name: "contact", path: "/contact" },
-	];
+	const [isOpen, setIsOpen] = useState(false);
+
+	const handleToggle = () => {
+		setIsOpen((prevState) => !prevState);
+	};
 	return (
-		<section className="max-w-3xl mx-auto fixed text-white left-0 right-0 w-full py-5">
-			<div className="flex justify-between items-center text-sm border border-neutral-100/30 pl-8 pr-2 py-2 rounded-full backdrop-blur-2xl">
+		<>
+			<div className="bg-transparent fixed top-0 left-0 w-full p-4 flex justify-between items-center z-50">
 				{/* logo */}
-				<h5 className="font-bold text-lg">GreenFX</h5>
+				<h1 className="text-white text-2xl">Smart AI</h1>
 
-				{/* navigation links */}
-				<nav className="space-x-7">
-					{NAVLINKS.map((link, index) => (
-						<Link to={link.path} key={index}>
-							{link.name}
-						</Link>
+				{/* navlinks */}
+				<ul className="hidden md:flex items-center gap-10">
+					{NAVLINKS.map((item, idx) => (
+						<NavLink
+							key={idx}
+							className={({ isActive }) =>
+								`text-white hover:bg-green-800  rounded-full px-4 py-1.5 ${isActive ? "bg-green-800" : ""}`
+							}
+							to={item.path}
+						>
+							{item.name}
+						</NavLink>
 					))}
-				</nav>
+				</ul>
 
-				{/* cta's */}
-				<div>
-					<button className="uppercase bg-green-600 text-sm text-black px-6 py-2 rounded-full">
-					Contact us
-					</button>
-				</div>
+				{/* mobile navbar triggers */}
+				<button onClick={handleToggle} className="block md:hidden">
+					{isOpen ? (
+						<IoMdClose color="white" size={20} />
+					) : (
+						<CiMenuFries color="white" size={20} />
+					)}
+				</button>
 			</div>
-		</section>
+
+			{/* mobile navbar */}
+			{isOpen && (
+				<div className="bg-transparent fixed top-14 left-0 w-full z-50">
+					<ul className="flex-col items-start flex gap-3 bg-black py-3">
+						{NAVLINKS.map((item, idx) => (
+							<>
+								<NavLink
+									key={idx}
+									className={({ isActive }) =>
+										`text-white hover:bg-green-800  rounded-full px-4 py-1.5 ${isActive ? "text-green-500" : ""}`
+									}
+									to={item.path}
+								>
+									{item.name}
+								</NavLink>
+								<div className="bg-white/20 w-full h-px" />
+							</>
+						))}
+					</ul>
+				</div>
+			)}
+		</>
 	);
 };
 
