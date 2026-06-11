@@ -6,6 +6,7 @@ import ProductPages from "../pages/ProductPages";
 import AboutPages from "../pages/AboutPages";
 import CreateProduct from "../pages/CreateProduct";
 import UpdateProduct from "../pages/UpdateProduct";
+import Timer from "../components/Timer";
 
 
 export const routesConfig = [
@@ -31,9 +32,14 @@ export const routesConfig = [
         element: <Contact />,
       },
       {
-        path: "Product",
+        path: "products",
         element: <Product />,
       },
+        {
+        path: "timer",
+        element: <Timer/>,
+      },
+
 
       {
         path: "create-product",

@@ -1,29 +1,56 @@
-import React from 'react'
-import App from '../../App';
+import { useApp } from "../context/AppContext";
 
-function Navbar() {
+const Navbar = () => {
+  const {
+    navigate,
+    setSearch,
+    logout,
+  } = useApp();
+
   return (
-    <div>   
-    {/* Navigation */}
-  <header class="navbar">
-    <div class="logo">COZA <span>STORE</span></div>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="SHOP.HTML">Shop</a></li>
-        <li><a href="#">Features</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-     <div class="icons">
-      <a href="#"><i class="bi bi-search"></i></a>
-      <a href="#"><i class="bi bi-cart"></i></a>
-      <a href="#"><i class="bi bi-heart"></i></a>
-    </div>
-  </header></div>
-  )
-}
+    <nav className="navbar">
+      <h2 onClick={() => navigate("home")}>
+        CineVault
+      </h2>
 
-export default Navbar
+      <div className="nav-links">
+        <button onClick={() => navigate("home")}>
+          Home
+        </button>
+
+        <button onClick={() => navigate("movies")}>
+          Movies
+        </button>
+
+        <button onClick={() => navigate("genres")}>
+          Genres
+        </button>
+
+        <button onClick={() => navigate("watchlist")}>
+          Watchlist
+        </button>
+
+        <button onClick={() => navigate("profile")}>
+          Profile
+        </button>
+      </div>
+
+      <div className="nav-search">
+        <input
+          type="text"
+          placeholder="Search movie..."
+          onChange={(e) => {
+            setSearch(e.target.value);
+            navigate("search");
+          }}
+        />
+
+        <button onClick={logout}>
+          Logout
+        </button>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
